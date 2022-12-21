@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar-item">
+  <div class="sidebar-item group">
     <component
       :is="component"
       v-bind="linkAttributes"
@@ -21,7 +21,7 @@
 
 
 
-        <Tooltip v-if="tooltip!==null" class="inline absolute right-0">
+        <Tooltip :distance="10" v-if="tooltip!==null" class="absolute right-0 mr-1 hidden group-hover:inline">
 
         <template v-slot:content>
           <span v-html="tooltip"></span>
