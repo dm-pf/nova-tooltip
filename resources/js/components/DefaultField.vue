@@ -11,24 +11,23 @@
         >
 
 
+          {{ fieldLabel }}
 
-            {{ fieldLabel }}
-
-            <span v-if="field.required" class="text-red-500 text-sm">
+          <span v-if="field.required" class="text-red-500 text-sm">
               {{ __('*') }}
             </span>
 
 
-          <Tooltip :triggers="['click']" v-if="tooltip!==''" class="inline ml-4">
+          <Tooltip v-if="tooltip!==''" class="inline ml-4">
 
-            <template v-slot:content >
+            <template v-slot:content>
               <span v-html="tooltip"></span>
             </template>
 
             <Icon
-                :solid="true"
-                type="question-mark-circle"
-                class="cursor-pointer text-gray-400 dark:text-gray-500"
+              :solid="true"
+              type="question-mark-circle"
+              class="cursor-pointer text-gray-400 dark:text-gray-500"
             />
 
           </Tooltip>
@@ -47,7 +46,7 @@
         'w-full md:pt-2': field.stacked,
       }"
     >
-      <slot name="field" />
+      <slot name="field"/>
 
       <HelpText class="mt-2 help-text-error" v-if="showErrors && hasError">
         {{ firstError }}
@@ -77,12 +76,11 @@ export default {
     ...mapProps(['showHelpText']),
   },
 
-
   computed: {
     /**
      * Return the label that should be used for the field.
      */
-    fieldLabel() {
+    fieldLabel () {
 
       // If the field name is purposefully an empty string, then let's show it as such
       if (this.fieldName === '') {
@@ -92,18 +90,17 @@ export default {
       return this.fieldName || this.field.name || this.field.singularLabel
     },
 
-
     /**
      * Return the tooltip that should be used for the field.
      */
-    tooltip() {
+    tooltip () {
       return this.field.tooltip || ''
     },
 
     /**
      * Determine help text should be shown.
      */
-    shouldShowHelpText() {
+    shouldShowHelpText () {
       return this.showHelpText && this.field.helpText?.length > 0
     },
   },

@@ -14,6 +14,7 @@ class ToolTipServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Nova::script('tooltip', __DIR__.'/../dist/js/tool.js');
+        Nova::style('tooltip', __DIR__.'/../dist/css/tool.css');
 
         $this->app->booted(static function () {});
 
@@ -21,7 +22,7 @@ class ToolTipServiceProvider extends ServiceProvider
 
             MenuItem::macro('tooltip', function (string $text) {
                 if($this->data) {
-                    return $this->data([...$this->data, ...['tooltip' => $text]]);
+                    return $this->data(array_merge($this->data, ['tooltip' => $text]));
                 }
                 return $this->data(['tooltip' => $text]);
             });

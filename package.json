@@ -11,14 +11,12 @@
     "nova:install": "npm --prefix='../../vendor/laravel/nova' ci"
   },
   "devDependencies": {
-    "@vue/compiler-sfc": "^3.2.22",
+    "axios": "^1.1.3",
     "laravel-mix": "^6.0.41",
     "laravel-nova": "^1.12.3",
     "postcss": "^8.3.11",
+    "vue": "^3.2.45",
     "vue-loader": "^16.8.3",
-    "vuex": "^4.1.0",
-    "axios": "^1.1.3"
-  },
-  "dependencies": {
+    "vuex": "^4.1.0"
   }
 }

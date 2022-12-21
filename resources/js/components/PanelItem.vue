@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col md:flex-row -mx-6 px-6 py-2 md:py-0 space-y-2 md:space-y-0"
+    class="flex flex-col md:flex-row -mx-6 px-6 py-2 md:py-0 space-y-2 md:space-y-0 group"
     :dusk="field.attribute"
   >
     <div class="md:w-1/4 md:py-3">
@@ -8,16 +8,16 @@
         <h4 class="font-bold md:font-normal">
           <span>{{ label }}
 
-          <Tooltip :triggers="['click']" v-if="tooltip!==''" class="inline ml-4">
+          <Tooltip :distance="10" v-if="tooltip!==''" class="ml-4 hidden group-hover:inline">
 
-            <template v-slot:content >
+            <template v-slot:content>
               <span v-html="tooltip"></span>
             </template>
 
             <Icon
-                :solid="true"
-                type="question-mark-circle"
-                class="cursor-pointer text-gray-400 dark:text-gray-500"
+              :solid="true"
+              type="question-mark-circle"
+              class="cursor-pointer text-gray-400 dark:text-gray-500"
             />
 
           </Tooltip>
@@ -78,20 +78,20 @@ export default {
   },
 
   methods: {
-    copy() {
+    copy () {
       this.copyValueToClipboard(this.field.value)
     },
   },
 
   computed: {
-    label() {
+    label () {
       return this.fieldName || this.field.name
     },
 
     /**
      * Return the tooltip that should be used for the field.
      */
-    tooltip() {
+    tooltip () {
       return this.field.tooltip || ''
     },
   },

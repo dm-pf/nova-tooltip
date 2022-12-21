@@ -1,70 +1,68 @@
 <template>
   <thead class="bg-gray-50 dark:bg-gray-800">
-    <tr>
-      <!-- Select Checkbox -->
-      <th
-        class="td-fit uppercase text-xxs text-gray-500 tracking-wide pl-5 pr-2 py-2"
-        :class="{
+  <tr>
+    <!-- Select Checkbox -->
+    <th
+      class="td-fit uppercase text-xxs text-gray-500 tracking-wide pl-5 pr-2 py-2"
+      :class="{
           'border-r border-gray-200 dark:border-gray-600':
             shouldShowColumnBorders,
         }"
-        v-if="shouldShowCheckboxes"
-      >
-        <span class="sr-only">{{ __('Selected Resources') }}</span>
-      </th>
+      v-if="shouldShowCheckboxes"
+    >
+      <span class="sr-only">{{ __('Selected Resources') }}</span>
+    </th>
 
-      <!-- Field Names -->
-      <th
-        v-for="(field, index) in fields"
-        :key="field.uniqueKey"
-        :class="{
+    <!-- Field Names -->
+    <th
+      v-for="(field, index) in fields"
+      :key="field.uniqueKey"
+      :class="{
           [`text-${field.textAlign}`]: true,
           'border-r border-gray-200 dark:border-gray-600':
             shouldShowColumnBorders,
-          'px-6': index == 0 && !shouldShowCheckboxes,
-          'px-2': index != 0 || shouldShowCheckboxes,
+          'px-6': index === 0 && !shouldShowCheckboxes,
+          'px-2': index !== 0 || shouldShowCheckboxes,
           'whitespace-nowrap': !field.wrapping,
         }"
-        class="uppercase text-gray-500 text-xxs tracking-wide py-2"
+      class="uppercase text-gray-500 text-xxs tracking-wide py-2 group"
+    >
+
+      <Tooltip :distance="10" v-if="field.tooltip" class="mr-1 inline invisible group-hover:visible">
+
+        <template v-slot:content>
+          <span v-html="field.tooltip"></span>
+        </template>
+
+        <Icon
+          :solid="true"
+          type="question-mark-circle"
+          class="cursor-pointer text-gray-400 dark:text-gray-500"
+        />
+
+      </Tooltip>
+
+
+      <SortableIcon
+        @sort="requestOrderByChange(field)"
+        @reset="resetOrderBy(field)"
+        :resource-name="resourceName"
+        :uri-key="field.sortableUriKey"
+        v-if="sortable && field.sortable"
       >
+        {{ field.indexName }}
+      </SortableIcon>
 
-        <Tooltip :triggers="['click']"   v-if="field.tooltip" class="inline mr-1">
-
-          <template v-slot:content >
-            <span v-html="field.tooltip"></span>
-          </template>
-
-          <Icon
-              :solid="true"
-              type="question-mark-circle"
-              class="cursor-pointer text-gray-400 dark:text-gray-500"
-          />
-
-        </Tooltip>
+      <span v-else>{{ field.indexName }}</span>
 
 
+    </th>
 
-        <SortableIcon
-          @sort="requestOrderByChange(field)"
-          @reset="resetOrderBy(field)"
-          :resource-name="resourceName"
-          :uri-key="field.sortableUriKey"
-          v-if="sortable && field.sortable"
-        >
-          {{ field.indexName }}
-        </SortableIcon>
-
-        <span v-else>{{ field.indexName }}</span>
-
-
-
-      </th>
-
-      <!-- View, Edit, and Delete -->
-      <th class="uppercase text-xxs tracking-wide px-2 py-2">
-        <span class="sr-only">{{ __('Controls') }}</span>
-      </th>
-    </tr>
+    <!-- View, Edit, and Delete -->
+    <th class="uppercase text-xxs tracking-wide px-2 py-2">
+      <span class="sr-only">{{ __('Controls') }}</span>
+    </th>
+  </tr>
   </thead>
 </template>
 
@@ -87,14 +85,14 @@ export default {
     /**
      * Broadcast that the ordering should be updated.
      */
-    requestOrderByChange(field) {
+    requestOrderByChange (field) {
       this.$emit('order', field)
     },
 
     /**
      * Broadcast that the ordering should be reset.
      */
-    resetOrderBy(field) {
+    resetOrderBy (field) {
       this.$emit('reset-order-by', field)
     },
   },
