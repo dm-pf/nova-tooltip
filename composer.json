@@ -1,5 +1,5 @@
 {
-    "name": "badinansoft/nova-tooltip",
+    "name": "dm-pf/nova-tooltip",
     "description": "A Laravel Nova tool to give you ability to put tooltip in fields in every where and in menu item",
     "keywords": [
         "laravel",
