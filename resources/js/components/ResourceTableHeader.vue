@@ -28,21 +28,6 @@
       class="uppercase text-gray-500 text-xxs tracking-wide py-2 group"
     >
 
-      <Tooltip :distance="10" v-if="field.tooltip" class="mr-1 inline invisible group-hover:visible">
-
-        <template v-slot:content>
-          <span v-html="field.tooltip"></span>
-        </template>
-
-        <Icon
-          :solid="true"
-          type="question-mark-circle"
-          class="cursor-pointer text-gray-400 dark:text-gray-500"
-        />
-
-      </Tooltip>
-
-
       <SortableIcon
         @sort="requestOrderByChange(field)"
         @reset="resetOrderBy(field)"
@@ -55,6 +40,19 @@
 
       <span v-else>{{ field.indexName }}</span>
 
+      <Tooltip :distance="10" v-if="field.tooltip" class="ml-1 inline invisible group-hover:visible">
+
+        <template v-slot:content>
+          <span v-html="field.tooltip"></span>
+        </template>
+
+        <Icon
+          :solid="true"
+          type="question-mark-circle"
+          class="cursor-pointer text-gray-400 dark:text-gray-500"
+        />
+
+      </Tooltip>
 
     </th>
 
