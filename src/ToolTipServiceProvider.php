@@ -18,19 +18,15 @@ class ToolTipServiceProvider extends ServiceProvider
 
         $this->app->booted(static function () {});
 
-        Nova::serving(static function (ServingNova $event) {
+        MenuItem::macro('tooltip', function (string $text) {
+            if($this->data) {
+                return $this->data(array_merge($this->data, ['tooltip' => $text]));
+            }
+            return $this->data(['tooltip' => $text]);
+        });
 
-            MenuItem::macro('tooltip', function (string $text) {
-                if($this->data) {
-                    return $this->data(array_merge($this->data, ['tooltip' => $text]));
-                }
-                return $this->data(['tooltip' => $text]);
-            });
-
-            Field::macro('tooltip',function (string $text) {
-                return $this->withMeta(['tooltip' => $text]);
-            });
-
+        Field::macro('tooltip',function (string $text) {
+            return $this->withMeta(['tooltip' => $text]);
         });
     }
 
